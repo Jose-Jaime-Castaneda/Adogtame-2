@@ -8,17 +8,34 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
+  Alert,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
+//Pruebas de BD
+import { db } from '../DB/firebase';
+import { collection, addDoc } from "firebase/firestore";
 
 function Prelogin(): JSX.Element {
+  // Probando a guardar una coleccion y un documento en la Base de Datos
+  async function TestFirebase() {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815
+      });
+      Alert.alert("Document written with ID: ", docRef.id);
+    } catch (e) {
+      Alert.alert("Error adding document: ");
+    }
+  }
 
   return (
-    <SafeAreaView style = {styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle={"dark-content"} backgroundColor={"#b3a5d4"} />
 
       <View>
-        <Text style = {styles.texto}>Inicia sesion con tu cuenta o crea una {''}
+        <Text style={styles.texto}>Inicia sesion con tu cuenta o crea una {''}
           <Text>para conseguir tu futura mascota</Text>
         </Text>
       </View>
@@ -26,19 +43,19 @@ function Prelogin(): JSX.Element {
       <View style={styles.animation}>
         <LottieView
           source={require("./../../../assets/img/AnimacionPreLogin.json")}
-          style = {styles.animationImg}
+          style={styles.animationImg}
           autoPlay
           loop
         />
       </View>
 
-      <View style = {styles.centerBtn}>
-        <TouchableOpacity style = {styles.btn}>
-          <Text style = {styles.btnTexto}>Iniciar sesión</Text>
+      <View style={styles.centerBtn}>
+        <TouchableOpacity onPress={TestFirebase} style={styles.btn}>
+          <Text style={styles.btnTexto}>Iniciar sesión</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style = {styles.btn}>
-          <Text style = {styles.btnTexto}>Crear cuenta</Text>
+        <TouchableOpacity style={styles.btn}>
+          <Text style={styles.btnTexto}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
 
@@ -57,7 +74,7 @@ function Prelogin(): JSX.Element {
       </View> */}
 
     </SafeAreaView>
- );
+  );
 }
 
 const styles = StyleSheet.create({
@@ -74,11 +91,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: 'Quicksand-Medium',
   },
-  animation:{
+  animation: {
     width: "100%",
     alignItems: 'center',
   },
-  animationImg:{
+  animationImg: {
     width: '80%',
     aspectRatio: 1,
   },
@@ -100,7 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: '80%',
   },
-  btnTexto:{
+  btnTexto: {
     color: '#000',
     textAlign: 'center',
     fontSize: 15,
