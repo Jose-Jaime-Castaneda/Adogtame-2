@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 //Pruebas de BD
-import { db } from '../DB/firebase';
+import { db } from '../../DB/firebase';
 import { collection, addDoc } from "firebase/firestore";
 
 function Prelogin(): JSX.Element {
