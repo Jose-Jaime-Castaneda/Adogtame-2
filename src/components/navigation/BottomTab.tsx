@@ -6,11 +6,13 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 const Tab = createMaterialBottomTabNavigator();
 
-const BottomTab = () => {
+const BottomTab = () : JSX.Element => {
   return(
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={CargaInicial} />
-      <Tab.Screen name="Settings" component={Prelogin} />
+    <Tab.Navigator 
+      initialRouteName='Prelogin'  
+    >
+      <Tab.Screen name="Prelogin" component={Prelogin} />
+      <Tab.Screen name="Home" component={CargaInicial}  />
     </Tab.Navigator>
   );
 }
