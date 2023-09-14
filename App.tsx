@@ -1,14 +1,13 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomTab from './src/components/navigation/BottomTab';
+import MenuStack from './src/components/navigation/Stack';
 
 
 function App(): JSX.Element {
   return(
-    // <Prelogin />
-
     <NavigationContainer>
-      <BottomTab/>
+      <MenuStack />
     </NavigationContainer>
   );
 }
