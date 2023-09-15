@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -7,9 +8,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../DB/firebase';
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function signUp() {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        if (user) {
+          Alert.alert("Exito", "Se ha iniciado sesion wacha el console log ahi dice")
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        Alert.alert("Error", errorMessage + " Codigo: " + errorCode)
+      });
+  }
+
   return (
     <SafeAreaView style={{ backgroundColor: "#f2f2f2", height: "100%" }} >
       <View style={styles.containerImagen}>
@@ -19,14 +43,12 @@ const Login = () => {
         />
       </View>
 
-
-      <TextInput style={styles.input} placeholder="Correo electronico" placeholderTextColor={"#000"} />
-      <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor={"#000"} />
-
+      <TextInput style={styles.input} placeholder="Correo electronico" placeholderTextColor={"#000"} value={email} onChangeText={setEmail} />
+      <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor={"#000"} value={password} onChangeText={setPassword}  secureTextEntry={true} />
 
       <View style={{ alignItems: "center", marginTop: 40 }} >
-        <TouchableOpacity style={styles.btn} >
-          <Text style={styles.btnText} >Iniciar sesión</Text>
+        <TouchableOpacity style={styles.btn} onPress={signUp} >
+          <Text style={styles.btnText}>Iniciar sesión</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnForgotPassword} >
           <Text style={styles.btnForgotPasswordText}>Olvide la contraseña</Text>
@@ -52,7 +74,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     padding: 10,
     borderRadius: 10,
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: 'Quicksand-Medium',
   },
   btn: {
