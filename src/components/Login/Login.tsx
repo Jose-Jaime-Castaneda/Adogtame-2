@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
 
   },
   containerCreateAccount: {
-    marginTop: 35, 
-    flexDirection: 'row', 
+    marginTop: 35,
+    flexDirection: 'row',
     gap: 10,
     alignItems: "center"
   },
@@ -129,6 +129,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#6a8faf',
     padding: 15,
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   btnCreateAccountText: {
     fontFamily: 'Quicksand-Medium',
