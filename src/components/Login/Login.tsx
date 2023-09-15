@@ -39,12 +39,12 @@ const Login = () => {
       <View style={styles.containerImagen}>
         <Image
           source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
-          style={{ width: '92%', height: 210 }}
+          style={{ width: '85%', height: 210 }}
         />
       </View>
 
       <TextInput style={styles.input} placeholder="Correo electronico" placeholderTextColor={"#000"} value={email} onChangeText={setEmail} />
-      <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor={"#000"} value={password} onChangeText={setPassword}  secureTextEntry={true} />
+      <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor={"#000"} value={password} onChangeText={setPassword} secureTextEntry={true} />
 
       <View style={{ alignItems: "center", marginTop: 40 }} >
         <TouchableOpacity style={styles.btn} onPress={signUp} >
@@ -53,6 +53,13 @@ const Login = () => {
         <TouchableOpacity style={styles.btnForgotPassword} >
           <Text style={styles.btnForgotPasswordText}>Olvide la contraseña</Text>
         </TouchableOpacity>
+
+        <View style={styles.containerCreateAccount} >
+          <Text style={styles.createAccountText} >¿No tienes cuenta?</Text>
+          <TouchableOpacity style={styles.btnCreateAccount}>
+            <Text style={styles.btnCreateAccountText}>Crear</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
     </SafeAreaView>
@@ -106,5 +113,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Quicksand-Medium',
     color: "#aaa"
+  },
+  createAccountText: {
+    fontFamily: 'Quicksand-Medium',
+    fontSize: 16,
+
+  },
+  containerCreateAccount: {
+    marginTop: 35, 
+    flexDirection: 'row', 
+    gap: 10,
+    alignItems: "center"
+  },
+  btnCreateAccount: {
+    backgroundColor: '#6a8faf',
+    padding: 15,
+    borderRadius: 10,
+  },
+  btnCreateAccountText: {
+    fontFamily: 'Quicksand-Medium',
+    color: "white",
+    fontWeight: "500",
   },
 });
