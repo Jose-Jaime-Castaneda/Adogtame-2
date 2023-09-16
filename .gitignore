@@ -64,3 +64,8 @@ yarn-error.log
 
 # testing
 /coverage
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+.vscode

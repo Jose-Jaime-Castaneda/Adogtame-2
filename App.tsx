@@ -1,16 +1,13 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import Prelogin from './src/components/Prelogin/Prelogin'
-import CargaInicial from './src/components/Prelogin/CargaInicial'
 import { NavigationContainer } from '@react-navigation/native';
-import BottomTab from './src/components/navigation/BottomTab';
+import MenuStack from './src/components/Navigation/Stack';
 
 
 function App(): JSX.Element {
   return(
-    // <Prelogin />
-
     <NavigationContainer>
-      <BottomTab/>
+      <MenuStack />
     </NavigationContainer>
   );
 }

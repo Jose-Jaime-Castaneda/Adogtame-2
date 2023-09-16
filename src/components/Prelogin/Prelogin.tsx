@@ -4,31 +4,14 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
-  Image,
   TouchableOpacity,
   StatusBar,
-  Alert,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
-//Pruebas de BD
-import { db } from '../../DB/firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
-function Prelogin(): JSX.Element {
-  // Probando a guardar una coleccion y un documento en la Base de Datos
-  async function TestFirebase() {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
-      });
-      Alert.alert("Document written with ID: ", docRef.id);
-    } catch (e) {
-      Alert.alert("Error adding document: ");
-    }
-  }
+const Prelogin = (): JSX.Element => {
+  const navigator = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,7 +33,8 @@ function Prelogin(): JSX.Element {
       </View>
 
       <View style={styles.centerBtn}>
-        <TouchableOpacity onPress={TestFirebase} style={styles.btn}>
+        {/* @ts-ignore */}
+        <TouchableOpacity onPress={() => navigator.navigate("Login")} style={styles.btn}>
           <Text style={styles.btnTexto}>Iniciar sesión</Text>
         </TouchableOpacity>
 
@@ -58,21 +42,6 @@ function Prelogin(): JSX.Element {
           <Text style={styles.btnTexto}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
-
-      {/* <View style = {{
-        flex: 1,
-        alignItems: 'center'
-      }}>
-        <Image
-          source={require('./../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
-          style = {{
-            width: '30%',
-            height: '30%',
-            alignSelf: 'center'
-          }}
-        />
-      </View> */}
-
     </SafeAreaView>
   );
 }
