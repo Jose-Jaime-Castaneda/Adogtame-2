@@ -37,8 +37,10 @@ const Prelogin = (): JSX.Element => {
         <TouchableOpacity onPress={() => navigator.navigate("Login")} style={styles.btn}>
           <Text style={styles.btnTexto}>Iniciar sesión</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btn}>
+        {/* @ts-ignore */}
+        <TouchableOpacity onPress={() => navigator.navigate('Personales')} 
+          style={styles.btn}
+        >
           <Text style={styles.btnTexto}>Crear cuenta</Text>
         </TouchableOpacity>
       </View>
