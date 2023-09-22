@@ -11,14 +11,15 @@ const Stack = createStackNavigator();
 
 const MenuStack = () => {
   return (
-    <Stack.Navigator 
+    <Stack.Navigator
       initialRouteName='Prelogin'
     >
-      <Stack.Screen name="Prelogin" component={Prelogin} options={{headerShown: false}} />
-      <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-      <Stack.Screen name="Personales" component={Personales} options={{headerShown: false}} />
-      <Stack.Screen name="Contacto" component={Contacto} options={{headerShown: false}} />
-      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+      <Stack.Screen name='NavTab' component={BottomTab} options={{ headerShown: false }} />
+      <Stack.Screen name="Prelogin" component={Prelogin} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="Personales" component={Personales} options={{ headerShown: false }} />
+      <Stack.Screen name="Contacto" component={Contacto} options={{ headerShown: false }} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

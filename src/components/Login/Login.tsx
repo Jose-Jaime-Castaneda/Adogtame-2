@@ -30,7 +30,7 @@ const Login = () => {
                 if (user) {
                     Alert.alert("Exito", "Se ha iniciado sesion correctamente")
                     {/* @ts-ignore */}
-                    navigator.navigate('Home')
+                    navigator.navigate('NavTab')
                 }
             })
             .catch((error) => {
