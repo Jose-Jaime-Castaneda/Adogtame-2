@@ -9,6 +9,9 @@ import {
     View,
     StatusBar,
     KeyboardAvoidingView,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -37,69 +40,88 @@ const Login = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                Alert.alert("Error", errorMessage + " Codigo: " + errorCode)
+                const title = "Error al iniciar sesión";
+
+                if (errorCode == "auth/invalid-email") {
+                    Alert.alert(title, "Email invalido revisé perro")
+                }
+                else {
+                    Alert.alert(title, errorMessage + " Codigo: " + errorCode)
+                }
             });
     }
 
     return (
-
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
 
-            <View style={styles.imageContainer}>
-                <Image
-                    source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
-                    style={styles.image}
-                />
-            </View>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}
+            >
 
-            <View style={styles.whiteBackground}>
-                <Text style={{textAlign: "center"}}>Ingresa tus datos para iniciar sesión</Text>
+                <View style={styles.inner}>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
+                            style={styles.image}
+                        />
+                    </View>
 
-                <View style={styles.formContainer}>
-                    <Text style={styles.formText}>Correo:</Text>
-                    <TextInput
-                        value={email}
-                        onChangeText={setEmail}
-                        placeholder='Ingresa tu correo'
-                        keyboardType='email-address'
-                        style={styles.formInput}
-                    />
-                    <Text style={styles.formText}>Contraseña:</Text>
-                    <TextInput
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry={true}
-                        placeholder='Ingresa tu contraseña'
-                        style={styles.formInput}
-                    />
-                    <TouchableOpacity style={styles.btn} onPress={signUp}>
-                        <Text style={styles.btnText}>
-                            Iniciar sesión
-                        </Text>
-                    </TouchableOpacity>
+                    <View style={styles.whiteBackground}>
+                        <Text style={{ textAlign: "center" }}>Ingresa tus datos para iniciar sesión</Text>
+
+                        <View style={styles.formContainer}>
+                            <Text style={styles.formText}>Correo:</Text>
+                            <TextInput
+                                value={email}
+                                onChangeText={setEmail}
+                                placeholder='Ingresa tu correo'
+                                keyboardType='email-address'
+                                style={styles.formInput}
+                            />
+                            <Text style={styles.formText}>Contraseña:</Text>
+                            <TextInput
+                                value={password}
+                                onChangeText={setPassword}
+                                secureTextEntry={true}
+                                placeholder='Ingresa tu contraseña'
+                                style={styles.formInput}
+                            />
+                            <TouchableOpacity style={styles.btn} onPress={signUp}>
+                                <Text style={styles.btnText}>
+                                    Iniciar sesión
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.centerTextContainer}>
+                            <TouchableOpacity style={styles.btnForgotPassword} >
+                                <Text style={styles.btnForgotPasswordText}>Olvide la contraseña</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.centerTextContainer}>
+                            <Text style={styles.noAccountText}>¿No tienes una cuenta?</Text>
+                            {/* @ts-ignore */}
+                            <TouchableOpacity onPress={() => navigator.navigate("Personales")}>
+                                <Text style={styles.crearCuenta}> Crear cuenta</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.centerTextContainer}>
-                    <TouchableOpacity style={styles.btnForgotPassword} >
-                        <Text style={styles.btnForgotPasswordText}>Olvide la contraseña</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.centerTextContainer}>
-                    <Text style={styles.noAccountText}>¿No tienes una cuenta?</Text>
-                    {/* @ts-ignore */}
-                    <TouchableOpacity onPress={() => navigator.navigate("Personales")}>
-                        <Text style={styles.crearCuenta}> Crear cuenta</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#6a8faf',
-        flex: 1
+    },
+    inner: {
+        flex: 1,
+        justifyContent: 'space-between',
     },
     imageContainer: {
         flexDirection: 'row',
@@ -107,18 +129,16 @@ const styles = StyleSheet.create({
         marginVertical: 35
     },
     image: {
-        width: 350,
-        height: 200
+        width: 250,
+        height: 200,
+        position: "absolute"
     },
     whiteBackground: {
-        flex: 1,
         backgroundColor: '#f2f2f2',
         padding: 20,
+        paddingBottom: 40,
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50
-    },
-    formContainer: {
-        marginTop: 35
     },
     formText: {
         marginLeft: 10,
@@ -133,6 +153,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         color: '#374151',
         backgroundColor: '#E8E8E8'
+    },
+    formContainer: {
+        marginTop: 35
     },
     btn: {
         paddingTop: 15,
