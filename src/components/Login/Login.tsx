@@ -10,8 +10,6 @@ import {
     StatusBar,
     KeyboardAvoidingView,
     Platform,
-    TouchableWithoutFeedback,
-    Keyboard,
 } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
