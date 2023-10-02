@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   View,
-  Pressable,
   Image,
   TouchableOpacity,
   StatusBar,
@@ -12,15 +11,174 @@ import {
   TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { auth, db } from '../../DB/firebase';
+import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
+interface PropsPersonales {
+    nombre: string;
+    apellido: string;
+    nickname: string;
+    edad: string;
+}
 
-const Contacto = (): JSX.Element =>  {
+const Contacto = ({ nombre, apellido, nickname, edad }: PropsPersonales) =>  {
     const navigator = useNavigation();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [telefono, setTelefono] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    /* ========= Validar email ========= */
+    const validarEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };      
+
+    /* =========== Validar contraseña =========== */
+    const validarPassword = (contrasena: string) => {
+        // Verifica si la contraseña tiene al menos 8 caracteres
+        if (contrasena.length < 8) {
+          return false;
+        }
+        // Verifica si la contraseña comienza con una letra mayúscula
+        const primeraLetra = contrasena.charAt(0);
+        if (!/[A-Z]/.test(primeraLetra)) {
+          return false;
+        }
+        // Verifica si la contraseña contiene al menos un número
+        if (!/\d/.test(contrasena)) {
+          return false;
+        }
+        return true;
+      };
+
+    /* =========== Validar número de teléfono =========== */
+    const validarTelefono = (tel: string) => {
+        if(tel.length < 10){
+            return false;
+        }
+        return true;
+    }
+
+    /* =========== RESETEAR CAMPOS ========= */
+    const clear = () => {
+        setEmail('')
+        setPassword('')
+        setPassword2('')
+        setTelefono('')
+    }
+
+    /* =========== MANDAR LOS DATOS A LA BD =========== */
+    const signUp = async () => {
+        setLoading(true);
+        try{
+            createUserWithEmailAndPassword(auth, email, password)
+            .then( async () => {
+                await addDoc(collection(db, "Usuarios"), {
+                    Nombre: nombre,
+                    Apellido: apellido,
+                    Nickname: nickname,
+                    Edad: edad,
+                    Telefono: telefono,
+                    Correo: email,
+                    // Contraseña: password
+                });
+                clear();
+                Alert.alert(
+                    "🐶 Adogcuenta 🐶",
+                    "¡Tu Adogcuenta fue creada con éxito!",
+                    [
+                        {text: 'Aceptar'}
+                    ]
+                );
+            })
+        }catch(error: any){
+            Alert.alert('Registro NO exitoso' + error.message)
+        }finally{
+            setLoading(false);
+        }
+    }
+
+
+    /* ======== VERIFICAR QUE EL CORREO NO EXISTA ANTES DE CREAR LA CUENTA ======= */
+    const verificarCorreoExistente = async (email: string) => {
+        const usuariosRef = collection(db, 'Usuarios');
+        const q = query(usuariosRef, where('Correo', '==', email));
+        const querySnapshot = await getDocs(q);
+        return !querySnapshot.empty;
+    };
+
+    /* =========== CONGLOMERADO DE VALIDACIONES =========== */
+    const conglomerado = async () => {
+        if ([email, password, password2, telefono].includes('')){
+            Alert.alert(
+                'Error',
+                'Todos los campos son obligatorios',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        }
+        else if(!validarEmail(email)){
+            Alert.alert(
+                'Error',
+                'Ingrese un correo válido',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        }
+        else if (!validarPassword(password)) {
+            Alert.alert(
+              'Error',
+              'La contraseña debe tener al menos 8 caracteres, comenzar con una letra mayúscula y contener al menos un número.',
+              [
+                { text: 'Aceptar' }
+              ]
+            );
+            return;
+        }
+        //Validar que las contraseñas coincidan
+        else if (password !== password2) {
+            Alert.alert(
+              'Error',
+              'La contraseña y la confirmación de contraseña no coinciden.',
+              [
+                { text: 'Aceptar' }
+              ]
+            );
+            return;
+        }
+        else if(!validarTelefono(telefono)){
+            Alert.alert(
+                'Error',
+                'El numero de teléfono debe tener 10 digitos',
+                [{text: 'Aceptar'}]
+            )
+            return;
+        }
+        else {
+            // Verificar si el correo ya está registrado
+            const correoExiste = await verificarCorreoExistente(email);
+            if(correoExiste){
+                Alert.alert(
+                    'Error',
+                    'El correo ya está registrado. Por favor, intente con otro correo',
+                    [{text: 'Aceptar'}]
+                );
+                return;
+            } else{
+                signUp();                    
+                {/* @ts-ignore */}
+                navigator.navigate('Login')
+            }
+        }
+    }
 
     return (
         
@@ -42,7 +200,7 @@ const Contacto = (): JSX.Element =>  {
                         keyboardType='email-address'
                         style = {styles.formInput}
                         value={email}
-                        onChangeText={setEmail}
+                        onChangeText={(text) => setEmail(text)} 
                     />
                     <Text style = {styles.formText}>Contraseña:</Text>
                     <TextInput
@@ -50,7 +208,7 @@ const Contacto = (): JSX.Element =>  {
                         placeholder='Ingresa una contraseña'
                         style = {styles.formInput}
                         value={password}
-                        onChangeText={setPassword}
+                        onChangeText={(text) => setPassword(text)} 
                     />
                     <Text style = {styles.formText}>Confirmar contraseña:</Text>
                     <TextInput
@@ -58,7 +216,7 @@ const Contacto = (): JSX.Element =>  {
                         placeholder='Ingresa de nuevo tu contraseña'
                         style = {styles.formInput}
                         value={password2}
-                        onChangeText={setPassword2}
+                        onChangeText={(text) => setPassword2(text)} 
                     />
                     <Text style = {styles.formText}>Teléfono:</Text>
                     <TextInput
@@ -66,12 +224,12 @@ const Contacto = (): JSX.Element =>  {
                         keyboardType='phone-pad'
                         style = {styles.formInput}
                         value={telefono}
-                        onChangeText={setTelefono}
+                        onChangeText={(text) => setTelefono(text)} 
                         maxLength={10}
                     />
                     <View>
                         {/* @ts-ignore */}
-                        <TouchableOpacity onPress={() => navigator.navigate("Contacto")}
+                        <TouchableOpacity onPress={conglomerado}
                             style = {styles.btn}
                         >
                             <Text style = {styles.btnText}>

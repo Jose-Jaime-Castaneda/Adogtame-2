@@ -60,7 +60,7 @@ const Login = () => {
                 <Text style = {styles.formText}>Correo:</Text>
                 <TextInput
                     value={email} 
-                    onChangeText={setEmail}
+                    onChangeText={(text) => setEmail(text)}
                     placeholder='Ingresa tu correo'
                     keyboardType='email-address'
                     style = {styles.formInput}
@@ -68,7 +68,7 @@ const Login = () => {
                 <Text style = {styles.formText}>Contraseña:</Text>
                 <TextInput
                     value={password} 
-                    onChangeText={setPassword} 
+                    onChangeText={(text) => setPassword(text)} 
                     secureTextEntry={true}
                     placeholder='Ingresa tu contraseña'
                     style = {styles.formInput}
@@ -179,82 +179,5 @@ const styles = StyleSheet.create({
       fontFamily: 'Quicksand-Bold'
   } 
 });
-
-// const styles = StyleSheet.create({
-//   containerImagen: {
-//     alignItems: 'center',
-//     marginVertical: 30
-//   },
-//   input: {
-//     height: 50,
-//     marginHorizontal: 10,
-//     marginVertical: 5,
-//     borderBottomWidth: 1,
-//     borderBottomColor: "#ccc",
-//     padding: 10,
-//     borderRadius: 10,
-//     fontSize: 17,
-//     fontFamily: 'Quicksand-Medium',
-//   },
-//   btn: {
-//     backgroundColor: '#b3a5d4',
-//     padding: 15,
-//     borderRadius: 10,
-//     shadowColor: "#000",
-//     shadowOffset: {
-//       width: 0,
-//       height: 3,
-//     },
-//     shadowOpacity: 0.27,
-//     shadowRadius: 3.65,
-//     elevation: 6,
-//     marginTop: 20,
-//     width: '80%',
-//   },
-//   btnText: {
-//     color: '#000',
-//     textAlign: 'center',
-//     fontSize: 17,
-//     fontWeight: '500',
-//     fontFamily: 'Quicksand-Medium'
-//   },
-//   btnForgotPassword: {
-//     marginTop: 20,
-//   },
-//   btnForgotPasswordText: {
-//     fontSize: 16,
-//     fontFamily: 'Quicksand-Medium',
-//     color: "#aaa"
-//   },
-//   createAccountText: {
-//     fontFamily: 'Quicksand-Medium',
-//     fontSize: 16,
-
-//   },
-//   containerCreateAccount: {
-//     marginTop: 35,
-//     flexDirection: 'row',
-//     gap: 10,
-//     alignItems: "center"
-//   },
-//   btnCreateAccount: {
-//     backgroundColor: '#6a8faf',
-//     padding: 15,
-//     borderRadius: 10,
-//     shadowColor: "#000",
-//     shadowOffset: {
-//       width: 0,
-//       height: 1,
-//     },
-//     shadowOpacity: 0.1,
-//     shadowRadius: 2,
-//     elevation: 2,
-//   },
-//   btnCreateAccountText: {
-//     fontFamily: 'Quicksand-Medium',
-//     color: "white",
-//     fontWeight: "500",
-//   },
-// });
 
 export default Login;
