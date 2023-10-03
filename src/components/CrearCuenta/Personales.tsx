@@ -71,7 +71,7 @@ const Personales = () =>  {
         } else {
                 clear();
                 {/* @ts-ignore */}
-                navigator.navigate('Contacto');
+                navigator.navigate('Contacto', { nombre, apellido, nickname, edad });
         }        
     };
 
@@ -155,12 +155,12 @@ const Personales = () =>  {
                     </View>
                 </View>
             </KeyboardAvoidingView>
-            <Contacto 
+{/*             <Contacto 
                 nombre = {nombre}
                 apellido = {apellido}
                 nickname = {nickname}
                 edad = {edad}
-            />
+            /> */}
         </SafeAreaView>
     );
 };
