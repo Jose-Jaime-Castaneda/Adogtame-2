@@ -91,7 +91,7 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
                         Edad: edad,
                         Telefono: telefono,
                         Correo: email,
-                        // Contraseña: password
+                        Contraseña: password
                     });
                     clear();
                     Alert.alert(
@@ -101,6 +101,8 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
                             { text: 'Aceptar' }
                         ]
                     );
+                    {/* @ts-ignore */ }
+                    navigator.navigate('Login')
                 })
         } catch (error: any) {
             Alert.alert('Registro NO exitoso' + error.message)
@@ -181,8 +183,6 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
                 return;
             } else {
                 signUp();
-                {/* @ts-ignore */ }
-                navigator.navigate('Login')
             }
         }
     }

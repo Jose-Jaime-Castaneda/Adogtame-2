@@ -13,7 +13,6 @@ import {
   Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Contacto from './Contacto';
 
 const Personales = () =>  {
 
@@ -36,7 +35,7 @@ const Personales = () =>  {
     /* ========== VALIDAR LA EDAD ========== */
     const validarEdad = (edad: string) => {
         const edadNumero = parseInt(edad, 10);
-        return !isNaN(edadNumero) && edadNumero > 12 && edadNumero < 99;
+        return !isNaN(edadNumero) && edadNumero >= 12 && edadNumero <= 99;
       };
 
     /* =========== RESETEAR CAMPOS ========= */
@@ -78,89 +77,78 @@ const Personales = () =>  {
     return (
         <SafeAreaView style = {styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style = {{flex: 1}}
-            >
-                <View>
-                    <View style = {styles.imageContainer}>
-                        <Image 
-                            source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')} 
-                            style = {styles.image}
-                        /> 
-                    </View>
+            <View>
+                <View style = {styles.imageContainer}>
+                    <Image 
+                        source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')} 
+                        style = {styles.image}
+                    /> 
                 </View>
-                
-                <View style = {styles.whiteBackground}>
-                    <View style = {styles.formContainer}>
+            </View>
+            
+            <View style = {styles.whiteBackground}>
+                <View style = {styles.formContainer}>
 
-                        <View style = {styles.profileImageContainer}>
-                            <TouchableOpacity style = {styles.profileImage}>
-                                <Text style = {styles.profile}>+</Text>
-                            </TouchableOpacity>
-                            <Text style = {[styles.profileText, styles.formText]}>Foto de perfil</Text>
-                        </View>
-
-                        <Text style = {styles.formText}>Nombre {'(s)'}:</Text>
-                        <TextInput
-                            placeholder='Ingresa tu nombre (s)'
-                            style = {styles.formInput}
-                            value={nombre}
-                            onChangeText = {(text) => setNombre(text)}
-
-                        />
-
-                        <Text style = {styles.formText}>Apellido {'(s)'}:</Text>
-                        <TextInput
-                            placeholder='Ingresa tu apellido (s)'
-                            style = {styles.formInput}
-                            value={apellido}
-                            onChangeText = {(text) => setApellido(text)}
-                        />
-
-                        <Text style = {styles.formText}>Nickname {'(Alias)'}:</Text>
-                        <TextInput
-                            placeholder='Apodo'
-                            style = {styles.formInput}
-                            value={nickname}
-                            onChangeText = {(text) => setNickname(text)}
-                        />
-
-                        <Text style = {styles.formText}>Edad:</Text>
-                        <TextInput
-                            placeholder='Ingresa tu edad'
-                            keyboardType='numeric'
-                            style = {styles.formInput}
-                            value={edad}
-                            onChangeText = {(text) => setEdad(text)}
-                            maxLength={3}
-                        />
-
-                        {/* @ts-ignore */}
-                        <TouchableOpacity onPress={conglomerado}
-                            style = {styles.btn}
-                        >
-                            <Text style = {styles.btnText}>
-                                Continuar
-                            </Text>
+                    <View style = {styles.profileImageContainer}>
+                        <TouchableOpacity style = {styles.profileImage}>
+                            <Text style = {styles.profile}>+</Text>
                         </TouchableOpacity>
+                        <Text style = {[styles.profileText, styles.formText]}>Foto de perfil</Text>
                     </View>
 
-                    <View style = {styles.alreadyContainer}>
-                        <Text style = {styles.alreadyText}>¿Ya tienes una cuenta?</Text>
-                        {/* @ts-ignore */}
-                        <TouchableOpacity onPress={() => navigator.navigate("Login")}>
-                            <Text style = {styles.iniciarSesion}> Iniciar sesión</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Text style = {styles.formText}>Nombre {'(s)'}:</Text>
+                    <TextInput
+                        placeholder='Ingresa tu nombre (s)'
+                        style = {styles.formInput}
+                        value={nombre}
+                        onChangeText = {(text) => setNombre(text)}
+
+                    />
+
+                    <Text style = {styles.formText}>Apellido {'(s)'}:</Text>
+                    <TextInput
+                        placeholder='Ingresa tu apellido (s)'
+                        style = {styles.formInput}
+                        value={apellido}
+                        onChangeText = {(text) => setApellido(text)}
+                    />
+
+                    <Text style = {styles.formText}>Nickname {'(Alias)'}:</Text>
+                    <TextInput
+                        placeholder='Apodo'
+                        style = {styles.formInput}
+                        value={nickname}
+                        onChangeText = {(text) => setNickname(text)}
+                    />
+
+                    <Text style = {styles.formText}>Edad:</Text>
+                    <TextInput
+                        placeholder='Ingresa tu edad'
+                        keyboardType='numeric'
+                        style = {styles.formInput}
+                        value={edad}
+                        onChangeText = {(text) => setEdad(text)}
+                        maxLength={3}
+                    />
+
+                    {/* @ts-ignore */}
+                    <TouchableOpacity onPress={conglomerado}
+                        style = {styles.btn}
+                    >
+                        <Text style = {styles.btnText}>
+                            Continuar
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-            </KeyboardAvoidingView>
-{/*             <Contacto 
-                nombre = {nombre}
-                apellido = {apellido}
-                nickname = {nickname}
-                edad = {edad}
-            /> */}
+
+                <View style = {styles.alreadyContainer}>
+                    <Text style = {styles.alreadyText}>¿Ya tienes una cuenta?</Text>
+                    {/* @ts-ignore */}
+                    <TouchableOpacity onPress={() => navigator.navigate("Login")}>
+                        <Text style = {styles.iniciarSesion}> Iniciar sesión</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </SafeAreaView>
     );
 };
