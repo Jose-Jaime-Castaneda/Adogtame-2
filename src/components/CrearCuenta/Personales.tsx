@@ -4,38 +4,87 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
   Image,
   TouchableOpacity,
   StatusBar,
   Alert,
   TextInput,
-  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
-const Personales = (): JSX.Element =>  {
+const Personales = () =>  {
 
     const navigator = useNavigation();
 
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [edad, setEdad] = useState('');
+    const [nombre, setNombre] = useState<string>('');
+    const [apellido, setApellido] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
+    const [edad, setEdad] = useState<string>('');
+
+    /* =========== VALIDAR CAMPOS EN BLANCO ========= */
+    const validarCampos = () => {
+        if ([nombre, apellido, nickname, edad].includes('')){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    /* ========== VALIDAR LA EDAD ========== */
+    const validarEdad = (edad: string) => {
+        const edadNumero = parseInt(edad, 10);
+        return !isNaN(edadNumero) && edadNumero >= 12 && edadNumero <= 99;
+      };
+
+    /* =========== RESETEAR CAMPOS ========= */
+    const clear = () => {
+        setNombre('')
+        setApellido('')
+        setNickname('')
+        setEdad('')
+    };
+
+    /* ========= CONGLOMERADO DE VALIDACIONES ======== */
+    const conglomerado = () => {
+        if (!validarCampos()){
+            Alert.alert(
+                'Error',
+                'Todos los campos son obligatorios',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        }
+        else if (!validarEdad(edad)){
+            Alert.alert(
+                'Error',
+                'No cumples con la edad para usar esta aplicación',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        } else {
+                clear();
+                {/* @ts-ignore */}
+                navigator.navigate('Contacto', { nombre, apellido, nickname, edad });
+        }        
+    };
 
     return (
         <SafeAreaView style = {styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
-
-            <SafeAreaView>
+            <View>
                 <View style = {styles.imageContainer}>
                     <Image 
                         source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')} 
                         style = {styles.image}
                     /> 
                 </View>
-            </SafeAreaView>
+            </View>
             
             <View style = {styles.whiteBackground}>
                 <View style = {styles.formContainer}>
@@ -52,7 +101,7 @@ const Personales = (): JSX.Element =>  {
                         placeholder='Ingresa tu nombre (s)'
                         style = {styles.formInput}
                         value={nombre}
-                        onChangeText = {setNombre}
+                        onChangeText = {(text) => setNombre(text)}
 
                     />
 
@@ -61,7 +110,7 @@ const Personales = (): JSX.Element =>  {
                         placeholder='Ingresa tu apellido (s)'
                         style = {styles.formInput}
                         value={apellido}
-                        onChangeText = {setApellido}
+                        onChangeText = {(text) => setApellido(text)}
                     />
 
                     <Text style = {styles.formText}>Nickname {'(Alias)'}:</Text>
@@ -69,7 +118,7 @@ const Personales = (): JSX.Element =>  {
                         placeholder='Apodo'
                         style = {styles.formInput}
                         value={nickname}
-                        onChangeText = {setNickname}
+                        onChangeText = {(text) => setNickname(text)}
                     />
 
                     <Text style = {styles.formText}>Edad:</Text>
@@ -78,20 +127,18 @@ const Personales = (): JSX.Element =>  {
                         keyboardType='numeric'
                         style = {styles.formInput}
                         value={edad}
-                        onChangeText = {setEdad}
+                        onChangeText = {(text) => setEdad(text)}
                         maxLength={3}
                     />
 
                     {/* @ts-ignore */}
-                    <TouchableOpacity onPress={() => navigator.navigate("Contacto")}
+                    <TouchableOpacity onPress={conglomerado}
                         style = {styles.btn}
-                        
                     >
                         <Text style = {styles.btnText}>
                             Continuar
                         </Text>
                     </TouchableOpacity>
-
                 </View>
 
                 <View style = {styles.alreadyContainer}>
@@ -101,7 +148,6 @@ const Personales = (): JSX.Element =>  {
                         <Text style = {styles.iniciarSesion}> Iniciar sesión</Text>
                     </TouchableOpacity>
                 </View>
-
             </View>
         </SafeAreaView>
     );
@@ -112,6 +158,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#6a8faf', 
         flex: 1
     },
+    // inner: {
+    //     flex: 1,
+    //     justifyContent: 'space-between',
+    // },
     imageContainer:{
         flexDirection: 'row', 
         justifyContent: 'center', 
