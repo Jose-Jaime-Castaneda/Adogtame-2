@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#6a8faf',
         justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     texto: {
         fontFamily: 'Quicksand-Medium',
