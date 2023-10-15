@@ -9,6 +9,8 @@ import {
     StatusBar,
     Alert,
     TextInput,
+    KeyboardAvoidingView,
+    Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../../DB/firebase';
@@ -188,79 +190,92 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
     }
 
     return (
-
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
-            <SafeAreaView>
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
-                        style={styles.image}
-                    />
-                </View>
-            </SafeAreaView>
-            <View style={styles.whiteBackground}>
-                <View style={styles.formContainer}>
-                    <Text style={styles.formText}>Correo:</Text>
-                    <TextInput
-                        placeholder='Ingresa tu correo'
-                        keyboardType='email-address'
-                        style={styles.formInput}
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
-                    />
-                    <Text style={styles.formText}>Contraseña:</Text>
-                    <TextInput
-                        secureTextEntry={true}
-                        placeholder='Ingresa una contraseña'
-                        style={styles.formInput}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                    />
-                    <Text style={styles.formText}>Confirmar contraseña:</Text>
-                    <TextInput
-                        secureTextEntry={true}
-                        placeholder='Ingresa de nuevo tu contraseña'
-                        style={styles.formInput}
-                        value={password2}
-                        onChangeText={(text) => setPassword2(text)}
-                    />
-                    <Text style={styles.formText}>Teléfono:</Text>
-                    <TextInput
-                        placeholder='Ingresa un número telefónico'
-                        keyboardType='phone-pad'
-                        style={styles.formInput}
-                        value={telefono}
-                        onChangeText={(text) => setTelefono(text)}
-                        maxLength={10}
-                    />
-                    <View>
-                        {/* @ts-ignore */}
-                        <TouchableOpacity onPress={conglomerado}
-                            style={styles.btn}
-                        >
-                            <Text style={styles.btnText}>
-                                Crear cuenta
-                            </Text>
-                        </TouchableOpacity>
+
+            <KeyboardAvoidingView 
+                style={{flex: 1}} 
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <View style= {styles.inner}>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
+                            style={styles.image}
+                        />
+                    </View>
+
+                    <View style={styles.whiteBackground}>
+                        <Text style={{ textAlign: "center", fontFamily: 'Quicksand-Medium' }}>Ingresa tus datos para crear tu cuenta</Text>
+                        
+                        <View style={styles.formContainer}>
+
+                            <Text style={styles.formText}>Correo:</Text>
+                            <TextInput
+                                placeholder='Ingresa tu correo'
+                                keyboardType='email-address'
+                                style={styles.formInput}
+                                value={email}
+                                onChangeText={(text) => setEmail(text)}
+                            />
+                            <Text style={styles.formText}>Contraseña:</Text>
+                            <TextInput
+                                secureTextEntry={true}
+                                placeholder='Ingresa una contraseña'
+                                style={styles.formInput}
+                                value={password}
+                                onChangeText={(text) => setPassword(text)}
+                            />
+                            <Text style={styles.formText}>Confirmar contraseña:</Text>
+                            <TextInput
+                                secureTextEntry={true}
+                                placeholder='Ingresa de nuevo tu contraseña'
+                                style={styles.formInput}
+                                value={password2}
+                                onChangeText={(text) => setPassword2(text)}
+                            />
+                            <Text style={styles.formText}>Teléfono:</Text>
+                            <TextInput
+                                placeholder='Ingresa un número telefónico'
+                                keyboardType='phone-pad'
+                                style={styles.formInput}
+                                value={telefono}
+                                onChangeText={(text) => setTelefono(text)}
+                                maxLength={10}
+                            />
+                            <View>
+                                {/* @ts-ignore */}
+                                <TouchableOpacity onPress={conglomerado}
+                                    style={styles.btn}
+                                >
+                                    <Text style={styles.btnText}>
+                                        Crear cuenta
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={styles.centerTextContainer}>
+                            <Text style={styles.alreadyText}>¿Ya tienes una cuenta?</Text>
+                            {/* @ts-ignore */}
+                            <TouchableOpacity onPress={() => navigator.navigate("Login")}>
+                                <Text style={styles.iniciarSesion}> Iniciar sesión</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.alreadyContainer}>
-                    <Text style={styles.alreadyText}>¿Ya tienes una cuenta?</Text>
-                    {/* @ts-ignore */}
-                    <TouchableOpacity onPress={() => navigator.navigate("Login")}>
-                        <Text style={styles.iniciarSesion}> Iniciar sesión</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#6a8faf',
-        flex: 1
+    },
+    inner: {
+        flex: 1,
+        justifyContent: 'space-between',
     },
     imageContainer: {
         flexDirection: 'row',
@@ -268,20 +283,19 @@ const styles = StyleSheet.create({
         marginVertical: 20
     },
     image: {
-        width: 300,
-        height: 250
+        width: 250,
+        height: 200,
+        position: "absolute",
     },
     whiteBackground: {
-        flex: 1,
         backgroundColor: '#f2f2f2',
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 20,
+        padding: 20,
+        paddingBottom: 40,
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50
     },
     formContainer: {
-        marginTop: 35
+        marginTop: 35,
     },
     formText: {
         marginLeft: 10,
@@ -317,7 +331,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Quicksand-Bold'
     },
-    alreadyContainer: {
+    centerTextContainer: {
         marginTop: 17.5,
         flexDirection: 'row',
         justifyContent: 'center'
