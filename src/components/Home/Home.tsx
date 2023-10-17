@@ -66,9 +66,12 @@ const Home = (): JSX.Element => {
                         <Image source={objeto.imagenPublicacion} style={styles.imgPet} />
                         <View style={styles.containerBtn}>
                             <TouchableOpacity style={styles.btnAdogtar}>
-                                <Text style={styles.btnTexto}>
+                                <Image
+                                    source={require('./../../../assets/Icons/pokeball_black.png')}
+                                    style={styles.btnImage} />
+                                {/*                                 <Text style={styles.btnTexto}>
                                     ADOPTAR
-                                </Text>
+                                </Text> */}
                             </TouchableOpacity>
                         </View>
                         <Text style={styles.description}>
@@ -83,7 +86,7 @@ const Home = (): JSX.Element => {
                         {objeto.descripcion.length > MAX_DESCRIP && (
                             <TouchableOpacity onPress={() => toggleDescription(index)}>
                                 <Text style={styles.leerMas}>
-                                    {showFullDescription ? 'Leer menos' : 'Leer más'}
+                                    {showFullDescription[index] ? 'Leer menos' : 'Leer más'}
                                 </Text>
                             </TouchableOpacity>
                         )}
@@ -146,12 +149,18 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     btnAdogtar: {
-        paddingVertical: 10,
-        paddingHorizontal: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 12,
         marginTop: 15,
         marginLeft: 18,
         borderRadius: 10,
         backgroundColor: '#b3a5d4',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    btnImage: {
+        width: 40,
+        height: 40,
     },
     btnTexto: {
         color: '#000',
