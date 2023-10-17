@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ScrollView,
     SafeAreaView,
@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import NavBar from '../NavBar/NavBar';
-
 
 const Home = (): JSX.Element => {
     const navigator = useNavigation();
@@ -42,6 +41,18 @@ const Home = (): JSX.Element => {
         }
     ];
 
+    const MAX_DESCRIP = 28;
+
+    const [showFullDescription, setShowFullDescription] = useState(
+        objetos.map(() => false)
+    );
+
+    const toggleDescription = (index: number) => {
+        const newShowFullDescriptions = [...showFullDescription];
+        newShowFullDescriptions[index] = !newShowFullDescriptions[index];
+        setShowFullDescription(newShowFullDescriptions);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <NavBar />
@@ -60,7 +71,22 @@ const Home = (): JSX.Element => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.description}>{objeto.descripcion}</Text>
+                        <Text style={styles.description}>
+                            {showFullDescription[index]
+                                ? objeto.descripcion
+                                : objeto.descripcion.length > MAX_DESCRIP
+                                    ? `${showFullDescription[index]
+                                        ? objeto.descripcion
+                                        : objeto.descripcion.slice(0, MAX_DESCRIP)}...`
+                                    : objeto.descripcion}
+                        </Text>
+                        {objeto.descripcion.length > MAX_DESCRIP && (
+                            <TouchableOpacity onPress={() => toggleDescription(index)}>
+                                <Text style={styles.leerMas}>
+                                    {showFullDescription ? 'Leer menos' : 'Leer más'}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
                 ))}
             </ScrollView>
@@ -70,32 +96,33 @@ const Home = (): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
         flex: 1,
     },
     card: {
         backgroundColor: '#f2f2f2',
-        marginBottom: 10,
     },
     cardTitle: {
+        borderTopColor: "#b3a5d4",
+        borderTopWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#f2f2f2',
     },
     imgProfile: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         borderRadius: 50,
-        borderWidth: 2,
-        borderColor: '#000',
-        margin: 6,
+        borderWidth: 2.5,
+        borderColor: '#b3a5d4',
+        marginVertical: 10,
+        marginLeft: 20,
+        marginRight: 10,
     },
     profileName: {
         fontFamily: 'Quicksand-Medium',
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: 'bold',
         letterSpacing: 1,
-
     },
     imgPet: {
         width: '100%',
@@ -104,33 +131,27 @@ const styles = StyleSheet.create({
     },
     description: {
         fontFamily: 'Quicksand-Medium',
-        fontSize: 18,
-        fontWeight: 'bold',
-        letterSpacing: 1,
+        fontSize: 16,
+        fontWeight: '600',
+        letterSpacing: 1.3,
         paddingLeft: 8,
         paddingVertical: 10,
         backgroundColor: '#f2f2f2',
         marginHorizontal: 10,
+        position: 'relative',
     },
     containerBtn: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        marginBottom: 10,
     },
     btnAdogtar: {
         paddingVertical: 10,
         paddingHorizontal: 8,
         marginTop: 15,
-        marginLeft: 20,
+        marginLeft: 18,
         borderRadius: 10,
         backgroundColor: '#b3a5d4',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 3.65,
-        elevation: 6,
     },
     btnTexto: {
         color: '#000',
@@ -138,6 +159,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Quicksand-Bold',
         fontSize: 18,
+    },
+    leerMas: {
+        position: 'absolute',
+        bottom: 10,
+        right: 8,
+        backgroundColor: '#f2f2f2',
+        color: "#b3a5d4",
     },
 });
 
