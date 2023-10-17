@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     },
     btnAdogtar: {
         paddingVertical: 4,
-        paddingHorizontal: 6,
+        paddingHorizontal: 12,
         marginTop: 15,
         marginLeft: 18,
         borderRadius: 10,
