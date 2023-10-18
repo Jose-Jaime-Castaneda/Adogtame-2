@@ -4,113 +4,165 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
   Image,
   TouchableOpacity,
   StatusBar,
   Alert,
   TextInput,
-  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
-const Personales = (): JSX.Element =>  {
+const Personales = () =>  {
 
     const navigator = useNavigation();
 
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [edad, setEdad] = useState('');
+    const [nombre, setNombre] = useState<string>('');
+    const [apellido, setApellido] = useState<string>('');
+    const [nickname, setNickname] = useState<string>('');
+    const [edad, setEdad] = useState<string>('');
+
+    /* =========== VALIDAR CAMPOS EN BLANCO ========= */
+    const validarCampos = () => {
+        if ([nombre, apellido, nickname, edad].includes('')){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    /* ========== VALIDAR LA EDAD ========== */
+    const validarEdad = (edad: string) => {
+        const edadNumero = parseInt(edad, 10);
+        return !isNaN(edadNumero) && edadNumero >= 12 && edadNumero <= 99;
+      };
+
+    /* =========== RESETEAR CAMPOS ========= */
+    const clear = () => {
+        setNombre('')
+        setApellido('')
+        setNickname('')
+        setEdad('')
+    };
+
+    /* ========= CONGLOMERADO DE VALIDACIONES ======== */
+    const conglomerado = () => {
+        if (!validarCampos()){
+            Alert.alert(
+                'Error',
+                'Todos los campos son obligatorios',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        }
+        else if (!validarEdad(edad)){
+            Alert.alert(
+                'Error',
+                'No cumples con la edad para usar esta aplicación',
+                [
+                    {text: 'Aceptar'}
+                ]
+            )
+            return;
+        } else {
+                clear();
+                {/* @ts-ignore */}
+                navigator.navigate('Contacto', { nombre, apellido, nickname, edad });
+        }        
+    };
 
     return (
         <SafeAreaView style = {styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
-
-            <SafeAreaView>
-                <View style = {styles.imageContainer}>
-                    <Image 
-                        source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')} 
-                        style = {styles.image}
-                    /> 
-                </View>
-            </SafeAreaView>
             
-            <View style = {styles.whiteBackground}>
-                <View style = {styles.formContainer}>
-
-                    <View style = {styles.profileImageContainer}>
-                        <TouchableOpacity style = {styles.profileImage}>
-                            <Text style = {styles.profile}>+</Text>
-                        </TouchableOpacity>
-                        <Text style = {[styles.profileText, styles.formText]}>Foto de perfil</Text>
+            <KeyboardAvoidingView 
+                style={{flex: 1}} 
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <View style= {styles.inner}>
+                    <View style = {styles.imageContainer}>
+                        <Image 
+                            source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')} 
+                            style = {styles.image}
+                        /> 
                     </View>
+                
+                    <View style = {styles.whiteBackground}>
+                        <View style = {styles.formContainer}>
+                            <View style = {styles.profileImageContainer}>
+                                <TouchableOpacity style = {styles.profileImage}>
+                                    <Text style = {styles.profile}>+</Text>
+                                </TouchableOpacity>
+                                <Text style = {[styles.profileText, styles.formText]}>Foto de perfil</Text>
+                            </View>
 
-                    <Text style = {styles.formText}>Nombre {'(s)'}:</Text>
-                    <TextInput
-                        placeholder='Ingresa tu nombre (s)'
-                        style = {styles.formInput}
-                        value={nombre}
-                        onChangeText = {setNombre}
+                            <Text style = {styles.formText}>Nombre {'(s)'}:</Text>
+                            <TextInput
+                                placeholder='Ingresa tu nombre (s)'
+                                style = {styles.formInput}
+                                value={nombre}
+                                onChangeText = {(text) => setNombre(text)}
 
-                    />
+                            />
 
-                    <Text style = {styles.formText}>Apellido {'(s)'}:</Text>
-                    <TextInput
-                        placeholder='Ingresa tu apellido (s)'
-                        style = {styles.formInput}
-                        value={apellido}
-                        onChangeText = {setApellido}
-                    />
+                            <Text style = {styles.formText}>Apellido {'(s)'}:</Text>
+                            <TextInput
+                                placeholder='Ingresa tu apellido (s)'
+                                style = {styles.formInput}
+                                value={apellido}
+                                onChangeText = {(text) => setApellido(text)}
+                            />
 
-                    <Text style = {styles.formText}>Nickname {'(Alias)'}:</Text>
-                    <TextInput
-                        placeholder='Apodo'
-                        style = {styles.formInput}
-                        value={nickname}
-                        onChangeText = {setNickname}
-                    />
+                            <Text style = {styles.formText}>Nickname {'(Alias)'}:</Text>
+                            <TextInput
+                                placeholder='Apodo'
+                                style = {styles.formInput}
+                                value={nickname}
+                                onChangeText = {(text) => setNickname(text)}
+                            />
 
-                    <Text style = {styles.formText}>Edad:</Text>
-                    <TextInput
-                        placeholder='Ingresa tu edad'
-                        keyboardType='numeric'
-                        style = {styles.formInput}
-                        value={edad}
-                        onChangeText = {setEdad}
-                        maxLength={3}
-                    />
+                            <Text style = {styles.formText}>Edad:</Text>
+                            <TextInput
+                                placeholder='Ingresa tu edad'
+                                keyboardType='numeric'
+                                style = {styles.formInput}
+                                value={edad}
+                                onChangeText = {(text) => setEdad(text)}
+                                maxLength={3}
+                            />
 
-                    {/* @ts-ignore */}
-                    <TouchableOpacity onPress={() => navigator.navigate("Contacto")}
-                        style = {styles.btn}
-                        
-                    >
-                        <Text style = {styles.btnText}>
-                            Continuar
-                        </Text>
-                    </TouchableOpacity>
+                            <TouchableOpacity style = {styles.btn} onPress={conglomerado}>
+                                <Text style = {styles.btnText}>
+                                    Continuar
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
 
+                        <View style = {styles.centerTextContainer}>
+                            <Text style = {styles.alreadyText}>¿Ya tienes una cuenta?</Text>
+                            {/* @ts-ignore */}
+                            <TouchableOpacity onPress={() => navigator.navigate("Login")}>
+                                <Text style = {styles.iniciarSesion}> Iniciar sesión</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-
-                <View style = {styles.alreadyContainer}>
-                    <Text style = {styles.alreadyText}>¿Ya tienes una cuenta?</Text>
-                    {/* @ts-ignore */}
-                    <TouchableOpacity onPress={() => navigator.navigate("Login")}>
-                        <Text style = {styles.iniciarSesion}> Iniciar sesión</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#6a8faf', 
-        flex: 1
+    },
+    inner: {
+        flex: 1,
+        justifyContent: 'space-between',
     },
     imageContainer:{
         flexDirection: 'row', 
@@ -119,19 +171,18 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 250, 
-        height: 200
+        height: 200,
+        position: "absolute",
     },
     whiteBackground: {
-        flex: 1, 
         backgroundColor: '#f2f2f2', 
-        paddingLeft: 20, 
-        paddingRight: 20, 
-        paddingTop: 20, 
+        padding: 20,
+        paddingBottom: 40, 
         borderTopLeftRadius: 50, 
         borderTopRightRadius: 50
     },
     formContainer:{
-        marginTop:5
+        marginTop: 0,
     },
     profileImageContainer: {
         justifyContent: 'center',
@@ -185,7 +236,7 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         fontFamily: 'Quicksand-Bold'
     },
-    alreadyContainer: {
+    centerTextContainer: {
         marginTop: 17.5, 
         flexDirection: 'row', 
         justifyContent: 'center'
