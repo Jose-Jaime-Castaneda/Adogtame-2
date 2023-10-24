@@ -28,7 +28,6 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
                 if (user) {
                     Alert.alert("Exito", "Se ha iniciado sesion correctamente")
                     {/* @ts-ignore */ }
