@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../DB/firebase';
+import { auth } from '../../DB/firebase.mjs';
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
