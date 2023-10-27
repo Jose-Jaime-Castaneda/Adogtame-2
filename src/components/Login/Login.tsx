@@ -16,7 +16,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../DB/firebase.mjs';
 import { useNavigation } from '@react-navigation/native';
 
-const Login = () => {
+const Login = (): JSX.Element => {
     const navigator = useNavigation();
 
 
