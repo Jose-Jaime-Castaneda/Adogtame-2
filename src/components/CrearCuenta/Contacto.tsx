@@ -13,7 +13,7 @@ import {
     Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { auth, db } from '../../DB/firebase';
+import { auth, db } from '../../DB/firebase.mjs';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 

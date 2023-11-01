@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../DB/firebase';
+import { auth } from '../../DB/firebase.mjs';
 import { useNavigation } from '@react-navigation/native';
 
-const Login = () => {
+const Login = (): JSX.Element => {
     const navigator = useNavigation();
 
 
@@ -28,7 +28,6 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
                 if (user) {
                     Alert.alert("Exito", "Se ha iniciado sesion correctamente")
                     {/* @ts-ignore */ }

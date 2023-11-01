@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Personales = () =>  {
+const Personales = (): JSX.Element =>  {
 
     const navigator = useNavigation();
 
