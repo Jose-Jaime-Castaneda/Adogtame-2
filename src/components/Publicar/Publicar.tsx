@@ -107,7 +107,7 @@ const Publicar = (): JSX.Element => {
         { key: '3', value: 'Dias' },
     ]
 
-    const launchImagePicker = () => {
+    const launchImagePicker = (): void => {
         launchImageLibrary({
             mediaType: 'photo'
         }, (response: any) => {
@@ -125,7 +125,7 @@ const Publicar = (): JSX.Element => {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={'#6a8faf'} />
 
-            <ScrollView style={{ flex: 1}} >
+            <ScrollView style={{ flex: 1 }} >
                 <KeyboardAvoidingView
                     style={styles.whiteBackground}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
