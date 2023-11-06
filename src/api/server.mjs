@@ -34,7 +34,7 @@ app.post('/adogtame/publicaciones/', async (req, res) => {
         res.status(200).send({ message: 'Se ha subido correctamente', title: "Exito" });
     } catch (error) {
         console.log(error);
-        res.status(400).send({ message: 'Algo fallo wacho', title: "Error" });
+        res.status(400).send({ message: 'Algo ha fallado contacte con el administrador', title: "Error", Error: error });
     }
 });
 
