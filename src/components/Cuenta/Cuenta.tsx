@@ -10,14 +10,20 @@ import {
 import NavBar_Perfil from '../NavBar_Perfil/NavBar_Perfil'
 import React, { useEffect, useState } from 'react'
 import { getUserInformation } from '../../Utils/user.mjs'
+import { useNavigation } from '@react-navigation/native';
 
 const Cuenta = () => {
+  const navigator = useNavigation();
   const [userData, setUserData] = useState<any>(null);
 
   const imagenPerfil = require('./../../../assets/img/ImagenesPrueba/ImgPerfil1.png');
 
   const capitalizeFirstLetter = (usuario: string) => {
     return usuario.charAt(0).toUpperCase() + usuario.slice(1);
+  }
+
+  const editarCuentaBtn = () => {
+    console.log('hola');
   }
 
   useEffect(() => {
@@ -44,7 +50,7 @@ const Cuenta = () => {
         <View style={styles.containerTop}>
           <Image source={imagenPerfil} style={styles.imgProfile} />
           <View>
-            <TouchableOpacity style={styles.btnEditar}>
+            <TouchableOpacity style={styles.btnEditar} onPress={() => editarCuentaBtn()}>
               <Text style={styles.txtBtn}>
                 Editar Perfil
               </Text>
