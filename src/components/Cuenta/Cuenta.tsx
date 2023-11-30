@@ -22,8 +22,8 @@ const Cuenta = (): JSX.Element => {
     return usuario.charAt(0).toUpperCase() + usuario.slice(1);
   }
 
-  const editarCuentaBtn = () => {
-    navigator.navigate('EditarCuenta');
+  const editarCuentaBtn = (nombre: string, apellido: string, nickname: string, correo: string, edad: string, telefono: string) => {
+    navigator.navigate('EditarCuenta', {nombre, apellido, nickname, correo, edad, telefono});
   }
 
   useEffect(() => {
@@ -50,7 +50,14 @@ const Cuenta = (): JSX.Element => {
         <View style={styles.containerTop}>
           <Image source={imagenPerfil} style={styles.imgProfile} />
           <View>
-            <TouchableOpacity style={styles.btnEditar} onPress={editarCuentaBtn}>
+            <TouchableOpacity style={styles.btnEditar} onPress={() =>
+              editarCuentaBtn(
+                userData.user.Nombre,
+                userData.user.Apellido,
+                userData.user.Nickname,
+                userData.user.Correo,
+                userData.user.Edad,
+                userData.user.Telefono)}>
               <Text style={styles.txtBtn}>
                 Editar Perfil
               </Text>

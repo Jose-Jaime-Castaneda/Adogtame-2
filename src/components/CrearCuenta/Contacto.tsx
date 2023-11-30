@@ -16,21 +16,20 @@ import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../../DB/firebase.mjs';
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
 import { RouteProp } from '@react-navigation/native';
 
-type ContactoScreenRouteProp = {
-    route: RouteProp<{
-        Contacto: {
-            nombre: string;
-            apellido: string;
-            nickname: string;
-            edad: string;
-        };
-    }, 'Contacto'>;
-};
+type ParamList = {
+    Contacto: {
+      nombre: string;
+      apellido: string;
+      nickname: string;
+      edad: number;
+    };
+  };
 
-const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
+type ContactoScreenRouteProp = RouteProp<ParamList, 'Contacto'>;
+
+const Contacto: React.FC<{ route: ContactoScreenRouteProp }> = ({ route }) => {
     const { nombre, apellido, nickname, edad } = route.params;
     const navigator = useNavigation();
 
@@ -193,11 +192,11 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={"dark-content"} backgroundColor={"#6a8faf"} />
 
-            <KeyboardAvoidingView 
-                style={{flex: 1}} 
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <View style= {styles.inner}>
+                <View style={styles.inner}>
                     <View style={styles.imageContainer}>
                         <Image
                             source={require('../../../assets/img/ADOGTAME_LOGO_TRANSP.png')}
@@ -207,7 +206,7 @@ const Contacto: React.FC<ContactoScreenRouteProp> = ({ route }) => {
 
                     <View style={styles.whiteBackground}>
                         <Text style={{ textAlign: "center", fontFamily: 'Quicksand-Medium' }}>Ingresa tus datos para crear tu cuenta</Text>
-                        
+
                         <View style={styles.formContainer}>
 
                             <Text style={styles.formText}>Correo:</Text>
