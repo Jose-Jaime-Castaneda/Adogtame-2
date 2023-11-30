@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react'
 import { getUserInformation } from '../../Utils/user.mjs'
 import { useNavigation } from '@react-navigation/native';
 
-const Cuenta = () => {
+const Cuenta = (): JSX.Element => {
   const navigator = useNavigation();
   const [userData, setUserData] = useState<any>(null);
 
@@ -23,7 +23,7 @@ const Cuenta = () => {
   }
 
   const editarCuentaBtn = () => {
-    console.log('hola');
+    navigator.navigate('EditarCuenta');
   }
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Cuenta = () => {
         <View style={styles.containerTop}>
           <Image source={imagenPerfil} style={styles.imgProfile} />
           <View>
-            <TouchableOpacity style={styles.btnEditar} onPress={() => editarCuentaBtn()}>
+            <TouchableOpacity style={styles.btnEditar} onPress={editarCuentaBtn}>
               <Text style={styles.txtBtn}>
                 Editar Perfil
               </Text>

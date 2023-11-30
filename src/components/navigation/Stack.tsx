@@ -6,6 +6,7 @@ import Login from '../Login/Login';
 import Personales from '../CrearCuenta/Personales';
 import Contacto from '../CrearCuenta/Contacto';
 import Home from '../Home/Home';
+import EditarCuenta from '../EditarCuenta/EditarCuenta';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const MenuStack = () => {
       <Stack.Screen name="Personales" component={Personales} options={{ headerShown: false }} />
       <Stack.Screen name="Contacto" component={Contacto} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Stack.Screen name='EditarCuenta' component={EditarCuenta} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
