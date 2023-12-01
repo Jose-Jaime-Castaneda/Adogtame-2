@@ -10,8 +10,8 @@ import {
 import NavBar_Perfil from '../NavBar_Perfil/NavBar_Perfil'
 import React, { useEffect, useState } from 'react'
 import { getUserInformation } from '../../Utils/user.mjs'
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const Cuenta = (): JSX.Element => {
   const navigator = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -23,13 +23,12 @@ const Cuenta = (): JSX.Element => {
     return usuario.charAt(0).toUpperCase() + usuario.slice(1);
   }
 
-  const editarCuentaBtn = (nombre: string, apellido: string, nickname: string, correo: string, edad: string, telefono: string) => {
+  const editarCuentaBtn = (nombre: string, apellido: string, nickname: string, correo: string, telefono: string) => {
     navigator.navigate('EditarCuenta', {
       nombre,
       apellido,
       nickname,
       correo,
-      edad,
       telefono
     });
   }
@@ -64,7 +63,6 @@ const Cuenta = (): JSX.Element => {
                 userData.user.Apellido,
                 userData.user.Nickname,
                 userData.user.Correo,
-                userData.user.Edad,
                 userData.user.Telefono)}>
               <Text style={styles.txtBtn}>
                 Editar Perfil
