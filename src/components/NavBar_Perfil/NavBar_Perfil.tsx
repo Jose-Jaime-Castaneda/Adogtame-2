@@ -4,7 +4,6 @@ import {
     StyleSheet,
     Text,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const NavBar_Perfil = ({ nombreUsuario, apellidoUsuario }: { nombreUsuario: string, apellidoUsuario: string }) => {
     const capitalizeFirstLetter = (usuario: string) => {

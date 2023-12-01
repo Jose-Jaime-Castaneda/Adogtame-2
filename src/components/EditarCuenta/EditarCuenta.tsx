@@ -4,13 +4,11 @@ import {
     SafeAreaView,
     View,
     Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import NavBar from '../NavBar/NavBar';
 import { RouteProp } from '@react-navigation/native';
+import NavBar_EditCuenta from '../NavBar_EditCuenta/NavBar_EditCuenta';
 
 type ParamList = {
     EditarCuenta: {
@@ -27,11 +25,10 @@ type EditarCuentaScreenRouteProp = RouteProp<ParamList, 'EditarCuenta'>;
 
 const EditarCuenta: React.FC<{ route: EditarCuentaScreenRouteProp }> = ({ route }) => {
     const { nombre, apellido, nickname, edad, telefono } = route.params;
-    const navigator = useNavigation();
 
     return (
         <SafeAreaView>
-            <NavBar />
+            <NavBar_EditCuenta />
             <ScrollView>
                 <Text>{nombre}</Text>
                 <Text>{apellido}</Text>

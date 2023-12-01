@@ -23,7 +23,14 @@ const Cuenta = (): JSX.Element => {
   }
 
   const editarCuentaBtn = (nombre: string, apellido: string, nickname: string, correo: string, edad: string, telefono: string) => {
-    navigator.navigate('EditarCuenta', {nombre, apellido, nickname, correo, edad, telefono});
+    navigator.navigate('EditarCuenta', {
+      nombre,
+      apellido,
+      nickname,
+      correo,
+      edad,
+      telefono
+    });
   }
 
   useEffect(() => {
