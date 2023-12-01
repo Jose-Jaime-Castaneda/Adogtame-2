@@ -13,7 +13,7 @@ const NavBar_EditCuenta = () => {
     const navigator = useNavigation();
 
     const Regresar = () => {
-        navigator.navigate('Cuenta');
+        navigator.navigate('Cuenta' as never);
     }
 
     return (

@@ -10,10 +10,11 @@ import {
 import NavBar_Perfil from '../NavBar_Perfil/NavBar_Perfil'
 import React, { useEffect, useState } from 'react'
 import { getUserInformation } from '../../Utils/user.mjs'
-import { useNavigation } from '@react-navigation/native';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const Cuenta = (): JSX.Element => {
-  const navigator = useNavigation();
+  const navigator = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [userData, setUserData] = useState<any>(null);
 
   const imagenPerfil = require('./../../../assets/img/ImagenesPrueba/ImgPerfil1.png');
